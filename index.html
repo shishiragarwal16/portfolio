@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Shishir Agarwal — Finance & Data Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg:        #080f0c;
+    --bg-2:      #0d1810;
+    --bg-3:      #111f15;
+    --surface:   #132019;
+    --surface-2: #1a2e20;
+    --emerald:   #2ecc71;
+    --emerald-d: #27ae60;
+    --emerald-dim:#1a6b3a;
+    --green-glow:rgba(46,204,113,0.12);
+    --muted:     #5a7a62;
+    --text:      #d4e8d8;
+    --text-dim:  #7a9e82;
+    --border:    #1e3525;
+    --border-b:  #243d2a;
+    --white:     #e8f4ec;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  /* scanline overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(46,204,113,0.012) 2px,
+      rgba(46,204,113,0.012) 4px
+    );
+    pointer-events: none;
+    z-index: 9998;
+  }
+
+  /* subtle grid */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(46,204,113,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(46,204,113,0.025) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 9997;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.1rem 4rem;
+    background: rgba(8,15,12,0.94);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-brand {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--emerald);
+    font-weight: 500;
+  }
+
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+
+  .nav-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--emerald); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 8rem 4rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg-text {
+    position: absolute;
+    right: -1rem;
+    bottom: -4rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 20vw;
+    font-weight: 900;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(46,204,113,0.055);
+    pointer-events: none;
+    line-height: 1;
+    z-index: 0;
+    user-select: none;
+  }
+
+  .hero-glow {
+    position: absolute;
+    top: 15%;
+    left: 25%;
+    width: 550px;
+    height: 550px;
+    background: radial-gradient(circle, rgba(46,204,113,0.065) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .hero-left { position: relative; z-index: 1; }
+
+  .hero-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--emerald);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .hero-tag::before {
+    content: '';
+    display: block;
+    width: 2.5rem;
+    height: 1px;
+    background: var(--emerald);
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 5.5vw, 5.5rem);
+    font-weight: 900;
+    line-height: 1.0;
+    color: var(--white);
+  }
+  h1 em {
+    font-style: italic;
+    color: var(--emerald);
+    text-shadow: 0 0 40px rgba(46,204,113,0.3);
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+    color: var(--text-dim);
+    margin-top: 1.5rem;
+    max-width: 40ch;
+    font-weight: 300;
+    line-height: 1.8;
+  }
+  .hero-subtitle strong { color: var(--text); font-weight: 500; }
+
+  .hero-cta { margin-top: 2.5rem; display: flex; gap: 1rem; flex-wrap: wrap; }
+
+  .btn-primary {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 0.85rem 2rem;
+    background: var(--emerald);
+    color: var(--bg);
+    text-decoration: none;
+    font-weight: 500;
+    border: 1px solid var(--emerald);
+    transition: background 0.2s, box-shadow 0.2s;
+  }
+  .btn-primary:hover { background: var(--emerald-d); box-shadow: 0 0 28px rgba(46,204,113,0.28); }
+
+  .btn-ghost {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 0.85rem 2rem;
+    background: transparent;
+    color: var(--text);
+    text-decoration: none;
+    border: 1px solid var(--border-b);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-ghost:hover { border-color: var(--emerald); color: var(--emerald); }
+
+  .hero-right {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    padding-left: 4rem;
+  }
+
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--emerald);
+    padding: 1.5rem 2rem;
+    transition: background 0.3s, box-shadow 0.3s;
+  }
+  .stat-card:hover { background: var(--surface-2); box-shadow: 0 0 30px rgba(46,204,113,0.07); }
+  .stat-card:nth-child(2) { margin-left: 2rem; }
+
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: var(--emerald);
+    line-height: 1;
+    text-shadow: 0 0 30px rgba(46,204,113,0.2);
+  }
+  .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.63rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 0.35rem;
+  }
+
+  /* ── SECTIONS ── */
+  section { padding: 6rem 4rem; position: relative; }
+
+  .section-header { display: flex; align-items: flex-end; gap: 2rem; margin-bottom: 3.5rem; }
+
+  .section-number {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.66rem;
+    color: var(--emerald);
+    letter-spacing: 0.18em;
+    margin-bottom: 0.4rem;
+  }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 3.2vw, 2.8rem);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--white);
+  }
+
+  .section-line { flex: 1; height: 1px; background: var(--border); margin-bottom: 0.55rem; }
+
+  /* ── ABOUT ── */
+  #about { background: var(--bg-2); }
+
+  .about-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 5rem; align-items: start; }
+
+  .about-text p { font-size: 1rem; color: var(--text-dim); font-weight: 300; line-height: 1.85; margin-bottom: 1.1rem; }
+  .about-text p strong { color: var(--text); font-weight: 500; }
+
+  .info-list { list-style: none; display: flex; flex-direction: column; gap: 1.1rem; }
+  .info-list li { display: flex; flex-direction: column; gap: 0.2rem; padding-bottom: 1.1rem; border-bottom: 1px solid var(--border); }
+  .info-list li:last-child { border-bottom: none; }
+  .info-label { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--emerald); }
+  .info-value { font-size: 0.88rem; color: var(--text); font-weight: 400; }
+
+  /* ── SKILLS ── */
+  #skills { background: var(--bg); }
+
+  .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
+
+  .skill-group { background: var(--surface); border: 1px solid var(--border); padding: 1.8rem; transition: border-color 0.2s; }
+  .skill-group:hover { border-color: var(--emerald-dim); }
+
+  .skill-group-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.63rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--emerald);
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+  .tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.64rem;
+    padding: 0.28rem 0.7rem;
+    border: 1px solid var(--border-b);
+    color: var(--text-dim);
+    letter-spacing: 0.06em;
+    transition: border-color 0.2s, color 0.2s;
+    cursor: default;
+  }
+  .tag:hover { border-color: var(--emerald); color: var(--emerald); }
+  .tag.highlight { background: rgba(46,204,113,0.1); color: var(--emerald); border-color: var(--emerald-dim); }
+
+  /* ── PROJECTS ── */
+  #projects { background: var(--bg-3); }
+
+  .projects-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--border); }
+
+  .project-card {
+    background: var(--bg);
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    cursor: pointer;
+  }
+  .project-card:hover { background: var(--surface); }
+
+  .project-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 0; height: 2px;
+    background: var(--emerald);
+    transition: width 0.4s ease;
+  }
+  .project-card:hover::after { width: 100%; }
+
+  .project-type { font-family: 'DM Mono', monospace; font-size: 0.61rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--emerald); margin-bottom: 0.9rem; }
+  .project-title { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; color: var(--white); margin-bottom: 1rem; line-height: 1.25; }
+  .project-desc { font-size: 0.85rem; color: var(--text-dim); line-height: 1.75; font-weight: 300; margin-bottom: 1.5rem; }
+
+  .project-metrics { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+  .metric-value { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; color: var(--emerald); line-height: 1; }
+  .metric-label { font-family: 'DM Mono', monospace; font-size: 0.57rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-top: 0.2rem; }
+
+  .project-tech { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+  .tech-tag { font-family: 'DM Mono', monospace; font-size: 0.59rem; padding: 0.22rem 0.6rem; border: 1px solid var(--emerald-dim); color: var(--emerald); letter-spacing: 0.06em; opacity: 0.8; }
+
+  /* ── EXPERIENCE ── */
+  #experience { background: var(--bg-2); }
+
+  .exp-entry { display: grid; grid-template-columns: 200px 1fr; gap: 3rem; padding: 2.5rem 0; border-bottom: 1px solid var(--border); }
+  .exp-entry:last-child { border-bottom: none; }
+
+  .exp-date { font-family: 'DM Mono', monospace; font-size: 0.66rem; letter-spacing: 0.1em; color: var(--emerald); margin-bottom: 0.4rem; }
+  .exp-company { font-size: 0.84rem; font-weight: 600; color: var(--text); margin-bottom: 0.2rem; }
+  .exp-location { font-family: 'DM Mono', monospace; font-size: 0.6rem; color: var(--muted); letter-spacing: 0.08em; }
+
+  .exp-role { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: var(--white); margin-bottom: 0.9rem; }
+
+  .exp-points { list-style: none; display: flex; flex-direction: column; gap: 0.55rem; }
+  .exp-points li { font-size: 0.86rem; color: var(--text-dim); padding-left: 1.2rem; position: relative; line-height: 1.65; font-weight: 300; }
+  .exp-points li::before { content: '—'; position: absolute; left: 0; color: var(--emerald); font-size: 0.8rem; }
+
+  /* ── LEADERSHIP STRIP ── */
+  .leadership-strip {
+    background: var(--surface-2);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 3rem 4rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  .leadership-strip h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--white); margin-bottom: 0.5rem; }
+  .leadership-strip p { font-size: 0.86rem; color: var(--text-dim); font-weight: 300; line-height: 1.7; }
+
+  .leadership-stats { display: flex; gap: 3rem; }
+  .ls-num { font-family: 'Playfair Display', serif; font-size: 2.8rem; font-weight: 900; color: var(--emerald); line-height: 1; text-shadow: 0 0 30px rgba(46,204,113,0.2); }
+  .ls-label { font-family: 'DM Mono', monospace; font-size: 0.58rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-top: 0.25rem; }
+
+  /* ── CERTIFICATIONS ── */
+  #certifications { background: var(--bg); }
+
+  .certs-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+
+  .cert-card { border: 1px solid var(--border); padding: 1.5rem; background: var(--surface); position: relative; overflow: hidden; transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s; }
+  .cert-card:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,0,0,0.4), 0 0 20px rgba(46,204,113,0.05); border-color: var(--emerald-dim); }
+
+  .cert-badge { position: absolute; top: 1rem; right: 1rem; width: 7px; height: 7px; background: var(--emerald); border-radius: 50%; box-shadow: 0 0 8px rgba(46,204,113,0.5); }
+  .cert-issuer { font-family: 'DM Mono', monospace; font-size: 0.59rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--emerald); margin-bottom: 0.5rem; }
+  .cert-name { font-size: 0.87rem; font-weight: 600; color: var(--text); line-height: 1.35; margin-bottom: 0.4rem; }
+  .cert-date { font-family: 'DM Mono', monospace; font-size: 0.57rem; color: var(--muted); letter-spacing: 0.08em; }
+
+  /* ── EDUCATION ── */
+  #education { background: var(--bg-2); }
+
+  .edu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
+
+  .edu-card { padding: 2rem; border: 1px solid var(--border); background: var(--surface); transition: border-color 0.2s; }
+  .edu-card:hover { border-color: var(--emerald-dim); }
+
+  .edu-degree { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--emerald); margin-bottom: 0.5rem; }
+  .edu-school { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--white); margin-bottom: 0.3rem; line-height: 1.2; }
+  .edu-field { font-size: 0.8rem; color: var(--text-dim); margin-bottom: 0.8rem; font-weight: 300; }
+  .edu-cgpa { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 900; color: var(--emerald); line-height: 1; text-shadow: 0 0 20px rgba(46,204,113,0.2); }
+  .edu-cgpa-label { font-family: 'DM Mono', monospace; font-size: 0.57rem; letter-spacing: 0.1em; color: var(--muted); text-transform: uppercase; margin-top: 0.1rem; }
+  .edu-period { font-family: 'DM Mono', monospace; font-size: 0.59rem; color: var(--muted); margin-top: 0.5rem; letter-spacing: 0.08em; }
+
+  /* ── CONTACT ── */
+  #contact { background: var(--bg-3); text-align: center; }
+
+  .contact-subtitle { font-size: 1rem; color: var(--text-dim); max-width: 40ch; margin: 0 auto 2.5rem; font-weight: 300; line-height: 1.75; }
+
+  .contact-links { display: flex; justify-content: center; gap: 1.2rem; flex-wrap: wrap; }
+
+  .contact-link { font-family: 'DM Mono', monospace; font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; padding: 0.85rem 2rem; border: 1px solid var(--border-b); color: var(--text); text-decoration: none; transition: border-color 0.2s, color 0.2s, box-shadow 0.2s; }
+  .contact-link:hover { border-color: var(--emerald); color: var(--emerald); box-shadow: 0 0 20px rgba(46,204,113,0.08); }
+
+  .contact-link.primary { background: var(--emerald); border-color: var(--emerald); color: var(--bg); font-weight: 500; }
+  .contact-link.primary:hover { background: var(--emerald-d); border-color: var(--emerald-d); color: var(--bg); box-shadow: 0 0 30px rgba(46,204,113,0.28); }
+
+  /* ── FOOTER ── */
+  footer { background: var(--bg); padding: 1.4rem 4rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+  footer span { font-family: 'DM Mono', monospace; font-size: 0.59rem; letter-spacing: 0.1em; color: var(--muted); }
+
+  /* ── FADE UP ── */
+  .fade-up { opacity: 0; transform: translateY(24px); transition: opacity 0.65s ease, transform 0.65s ease; }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { gap: 1.2rem; }
+    .hero { grid-template-columns: 1fr; padding: 7rem 1.5rem 3rem; }
+    .hero-right { padding-left: 0; }
+    .hero-bg-text { display: none; }
+    section { padding: 4rem 1.5rem; }
+    .about-grid, .skills-grid, .projects-grid, .certs-grid, .edu-grid { grid-template-columns: 1fr; }
+    .exp-entry { grid-template-columns: 1fr; gap: 0.5rem; }
+    .leadership-strip { grid-template-columns: 1fr; padding: 2rem 1.5rem; }
+    footer { flex-direction: column; gap: 0.5rem; padding: 1.2rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">Shishir Agarwal</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#certifications">Certs</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-bg-text">DATA</div>
+
+  <div class="hero-left fade-up visible">
+    <div class="hero-tag">Finance &amp; Data Portfolio</div>
+    <h1>Shishir<br><em>Agarwal</em></h1>
+    <p class="hero-subtitle">
+      CS Engineer × Data Scientist. Bridging <strong>financial intelligence</strong> and <strong>data-driven systems</strong> — from fraud detection models to data warehouses.
+    </p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn-primary">View Projects</a>
+      <a href="mailto:agarwalshishir91@gmail.com" class="btn-ghost">Get in Touch</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="stat-card">
+      <div class="stat-number">9.00</div>
+      <div class="stat-label">CGPA — VIT Bhopal</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">8.25</div>
+      <div class="stat-label">CGPA — IIT Madras · Data Science &amp; Applications</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">TresVista</div>
+      <div class="stat-label">Incoming RIS Analyst · 2026</div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-header fade-up">
+    <div>
+      <div class="section-number">01 / About</div>
+      <h2>Who I Am</h2>
+    </div>
+    <div class="section-line"></div>
+  </div>
+  <div class="about-grid fade-up">
+    <div class="about-text">
+      <p>I'm a <strong>Computer Science student at VIT Bhopal</strong> (CGPA: 9.0) concurrently pursuing a <strong>BS in Data Science at IIT Madras</strong> — two degrees, one obsession: making data useful.</p>
+      <p>My interest sits squarely at the intersection of <strong>finance and technology</strong>. From building hybrid ML models for credit card fraud detection to designing data warehouses and crafting financial dashboards, I thrive where numbers meet systems.</p>
+      <p>As <strong>President of the FinTech Club at VIT Bhopal</strong>, I led a 70-member team, organized hackathons, and directed software development — combining technical depth with real leadership responsibility.</p>
+      <p>Incoming <strong>RIS Analyst at TresVista</strong>, and currently open to internship and project collaborations in Data Analytics, Financial Analytics, and Data Engineering.</p>
+    </div>
+    <ul class="info-list">
+      <li><span class="info-label">Location</span><span class="info-value">Lucknow, India</span></li>
+      <li><span class="info-label">Current Focus</span><span class="info-value">Finance × Data Analytics</span></li>
+      <li><span class="info-label">Incoming Role</span><span class="info-value">RIS Analyst · TresVista · 2026</span></li>
+      <li><span class="info-label">Degree 1</span><span class="info-value">B.Tech CSE — VIT Bhopal (2022–2026)</span></li>
+      <li><span class="info-label">Degree 2</span><span class="info-value">BS Data Science — IIT Madras (2025–2029)</span></li>
+      <li><span class="info-label">Email</span><span class="info-value">agarwalshishir91@gmail.com</span></li>
+      <li><span class="info-label">LinkedIn</span><span class="info-value">linkedin.com/in/shishiragarwal</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-header fade-up">
+    <div>
+      <div class="section-number">02 / Skills</div>
+      <h2>Technical Arsenal</h2>
+    </div>
+    <div class="section-line"></div>
+  </div>
+  <div class="skills-grid fade-up">
+    <div class="skill-group">
+      <div class="skill-group-title">Languages</div>
+      <div class="skill-tags">
+        <span class="tag highlight">Python</span><span class="tag highlight">SQL</span>
+        <span class="tag">Java</span><span class="tag">C/C++</span>
+        <span class="tag">HTML</span><span class="tag">CSS</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Data & Analytics</div>
+      <div class="skill-tags">
+        <span class="tag highlight">Tableau</span><span class="tag highlight">Power BI</span>
+        <span class="tag">Pandas</span><span class="tag">Matplotlib</span>
+        <span class="tag">MySQL</span><span class="tag">Excel</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Machine Learning</div>
+      <div class="skill-tags">
+        <span class="tag highlight">Scikit-Learn</span><span class="tag">Isolation Forest</span>
+        <span class="tag">Random Forest</span><span class="tag">Autoencoders</span>
+        <span class="tag">Regression</span><span class="tag">Classification</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Cloud Platforms</div>
+      <div class="skill-tags">
+        <span class="tag highlight">AWS</span><span class="tag highlight">GCP</span>
+        <span class="tag highlight">Oracle Cloud</span><span class="tag">OCI Foundations</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Data Engineering</div>
+      <div class="skill-tags">
+        <span class="tag highlight">ETL Workflows</span><span class="tag highlight">Medallion Architecture</span>
+        <span class="tag">Star Schema</span><span class="tag">Data Warehousing</span>
+        <span class="tag">Data Catalog</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Soft Skills</div>
+      <div class="skill-tags">
+        <span class="tag">Leadership</span><span class="tag">Team Building</span>
+        <span class="tag">Communication</span><span class="tag">Problem Solving</span>
+        <span class="tag">Ownership</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-header fade-up">
+    <div>
+      <div class="section-number">03 / Projects</div>
+      <h2>Selected Work</h2>
+    </div>
+    <div class="section-line"></div>
+  </div>
+  <div class="projects-grid fade-up">
+    <a class="project-card" href="https://github.com/shishiragarwal16/creditcardfrauddetection" target="_blank" rel="noopener noreferrer">
+      <div class="project-type">Machine Learning · FinTech</div>
+      <div class="project-title">Hybrid IF-AE-RFC Credit Card Fraud Detection</div>
+      <p class="project-desc">Novel hybrid model combining Isolation Forest (anomaly scoring), Autoencoder (feature engineering), and Random Forest Classifier — outperforming all baselines on imbalanced financial data.</p>
+      <div class="project-metrics">
+        <div class="metric"><div class="metric-value">0.874</div><div class="metric-label">F1-Score</div></div>
+        <div class="metric"><div class="metric-value">0.944</div><div class="metric-label">Precision</div></div>
+        <div class="metric"><div class="metric-value">+22.8%</div><div class="metric-label">vs GBC F1</div></div>
+        <div class="metric"><div class="metric-value">0.876</div><div class="metric-label">MCC</div></div>
+      </div>
+      <div class="project-tech">
+        <span class="tech-tag">Python</span><span class="tech-tag">Scikit-Learn</span>
+        <span class="tech-tag">Pandas</span><span class="tech-tag">NumPy</span>
+        <span class="tech-tag">Isolation Forest</span><span class="tech-tag">Autoencoder</span>
+      </div>
+    </a>
+    <a class="project-card" href="https://github.com/shishiragarwal16/sql-data-warehouse" target="_blank" rel="noopener noreferrer">
+      <div class="project-type">Data Engineering · Analytics</div>
+      <div class="project-title">SQL Data Warehouse — Medallion Architecture</div>
+      <p class="project-desc">Designed a full Data Warehouse integrating customer, product, and sales datasets across Bronze, Silver, and Gold layers. Built star schema with fact and dimension tables; includes full data quality checks.</p>
+      <div class="project-metrics">
+        <div class="metric"><div class="metric-value">3</div><div class="metric-label">Medallion Layers</div></div>
+        <div class="metric"><div class="metric-value">100%</div><div class="metric-label">Quality Checks</div></div>
+        <div class="metric"><div class="metric-value">★</div><div class="metric-label">Star Schema</div></div>
+      </div>
+      <div class="project-tech">
+        <span class="tech-tag">MySQL</span><span class="tech-tag">ETL</span>
+        <span class="tech-tag">Star Schema</span><span class="tech-tag">Medallion Architecture</span>
+      </div>
+    </a>
+    <div class="project-card">
+      <div class="project-type">Finance · Dashboard</div>
+      <div class="project-title">Financial & Donor Analytics Dashboards</div>
+      <p class="project-desc">Built performance and cost analysis dashboards at Udaan Foundation to optimize resource allocation and improve donor engagement through data-driven insights.</p>
+      <div class="project-metrics">
+        <div class="metric"><div class="metric-value">↑</div><div class="metric-label">Fund Efficiency</div></div>
+        <div class="metric"><div class="metric-value">↑</div><div class="metric-label">Donor Engagement</div></div>
+      </div>
+      <div class="project-tech">
+        <span class="tech-tag">Tableau</span><span class="tech-tag">Power BI</span>
+        <span class="tech-tag">Excel</span><span class="tech-tag">Financial Analysis</span>
+      </div>
+    </div>
+    <div class="project-card">
+      <div class="project-type">Marketing · Analytics</div>
+      <div class="project-title">Marketing Analytics — IIT Kharagpur</div>
+      <p class="project-desc">Completed IIT Kharagpur's Marketing Analytics program with an Elite certificate covering quantitative techniques for market segmentation, campaign analysis, and ROI measurement.</p>
+      <div class="project-metrics">
+        <div class="metric"><div class="metric-value">Elite</div><div class="metric-label">Certificate Grade</div></div>
+        <div class="metric"><div class="metric-value">IIT</div><div class="metric-label">Kharagpur</div></div>
+      </div>
+      <div class="project-tech">
+        <span class="tech-tag">Market Segmentation</span><span class="tech-tag">Campaign Analysis</span>
+        <span class="tech-tag">ROI Measurement</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-header fade-up">
+    <div>
+      <div class="section-number">04 / Experience</div>
+      <h2>Where I've Worked</h2>
+    </div>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="exp-entry fade-up">
+    <div class="exp-meta">
+      <div class="exp-date">2026 · Incoming</div>
+      <div class="exp-company">TresVista</div>
+      <div class="exp-location">RIS Analyst</div>
+    </div>
+    <div>
+      <div class="exp-role">Incoming RIS Analyst</div>
+      <ul class="exp-points">
+        <li>Joining TresVista as an RIS Analyst in 2026, applying finance and data analytics skills in a professional investment research context.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="exp-entry fade-up">
+    <div class="exp-meta">
+      <div class="exp-date">May 2025 – Jun 2025</div>
+      <div class="exp-company">Udaan Foundation</div>
+      <div class="exp-location">Hybrid</div>
+    </div>
+    <div>
+      <div class="exp-role">Data Analyst Intern</div>
+      <ul class="exp-points">
+        <li>Analyzed financial and donor data to support strategic decision-making and optimize resource allocation.</li>
+        <li>Improved fund utilization efficiency and enhanced donor engagement strategies through data-driven insights.</li>
+        <li>Prepared performance dashboards and cost analysis reports; contributed to program impact measurement.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="exp-entry fade-up">
+    <div class="exp-meta">
+      <div class="exp-date">Jan 2024 – Oct 2024</div>
+      <div class="exp-company">FinTech Club, VIT Bhopal</div>
+      <div class="exp-location">Bhopal, India</div>
+    </div>
+    <div>
+      <div class="exp-role">President</div>
+      <ul class="exp-points">
+        <li>Led a 70-member team, overseeing all club activities, meetings, and events across the academic year.</li>
+        <li>Organized flagship events: FinGenAI Hackathon, StockQuest, and CodeQuest Finanza.</li>
+        <li>Directed development of multiple software projects, enhancing the club's technical capabilities.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="exp-entry fade-up">
+    <div class="exp-meta">
+      <div class="exp-date">Oct 2024 – Present</div>
+      <div class="exp-company">FinTech Club, VIT Bhopal</div>
+      <div class="exp-location">Bhopal, India</div>
+    </div>
+    <div>
+      <div class="exp-role">Advisor</div>
+      <ul class="exp-points">
+        <li>Guiding the club's strategic direction and mentoring current leadership team.</li>
+        <li>Providing input on technical project selection and event planning from an advisory capacity.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="exp-entry fade-up">
+    <div class="exp-meta">
+      <div class="exp-date">Dec 2022 – Aug 2023</div>
+      <div class="exp-company">GeeksforGeeks VIT Bhopal</div>
+      <div class="exp-location">Bhopal, India</div>
+    </div>
+    <div>
+      <div class="exp-role">Content Writer</div>
+      <ul class="exp-points">
+        <li>Managed and created technical content for student chapter events and occasions.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- LEADERSHIP STRIP -->
+<div class="leadership-strip fade-up">
+  <div>
+    <h3>FinTech Club President</h3>
+    <p>Led one of VIT Bhopal's most active technical clubs — organizing hackathons, FinTech events, and directing software development initiatives where finance meets engineering.</p>
+  </div>
+  <div class="leadership-stats">
+    <div class="ls-stat"><div class="ls-num">70+</div><div class="ls-label">Members Led</div></div>
+    <div class="ls-stat"><div class="ls-num">3</div><div class="ls-label">Major Events</div></div>
+    <div class="ls-stat"><div class="ls-num">3.5yr</div><div class="ls-label">Club Tenure</div></div>
+  </div>
+</div>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <div class="section-header fade-up">
+    <div>
+      <div class="section-number">05 / Certifications</div>
+      <h2>Credentials</h2>
+    </div>
+    <div class="section-line"></div>
+  </div>
+  <div class="certs-grid fade-up">
+    <div class="cert-card"><div class="cert-badge"></div><div class="cert-issuer">IIT Kharagpur</div><div class="cert-name">Marketing Analytics</div><div class="cert-date">May 2025 · Elite Certificate</div></div>
+    <div class="cert-card"><div class="cert-badge"></div><div class="cert-issuer">Stanford Online / DeepLearning.AI</div><div class="cert-name">Machine Learning Specialization</div><div class="cert-date">Jul–Sept 2024</div></div>
+    <div class="cert-card"><div class="cert-badge"></div><div class="cert-issuer">Stanford Online</div><div class="cert-name">Supervised ML: Regression & Classification</div><div class="cert-date">2024</div></div>
+    <div class="cert-card"><div class="cert-badge"></div><div class="cert-issuer">Stanford Online</div><div class="cert-name">Advanced Learning Algorithms</div><div class="cert-date">2024</div></div>
+    <div class="cert-card"><div class="cert-badge"></div><div class="cert-issuer">Oracle</div><div class="cert-name">OCI 2025 Foundations Associate (1Z0-1085-25)</div><div class="cert-date">Sept 2025</div></div>
+    <div class="cert-card"><div class="cert-badge"></div><div class="cert-issuer">Microsoft / LinkedIn Learning</div><div class="cert-name">Excel Essential Training (Office 365)</div><div class="cert-date">NASBA Accredited</div></div>
+    <div class="cert-card"><div class="cert-badge"></div><div class="cert-issuer">Google / Coursera</div><div class="cert-name">The Bits and Bytes of Computer Networking</div><div class="cert-date">Completed</div></div>
+    <div class="cert-card"><div class="cert-badge"></div><div class="cert-issuer">LinkedIn Learning</div><div class="cert-name">SEO Foundations</div><div class="cert-date">Completed</div></div>
+    <div class="cert-card"><div class="cert-badge"></div><div class="cert-issuer">LinkedIn Learning</div><div class="cert-name">Learning to Write for the Web</div><div class="cert-date">Completed</div></div>
+    <div class="cert-card"><div class="cert-badge"></div><div class="cert-issuer">LeetCode</div><div class="cert-name">SQL 50 Badge</div><div class="cert-date">Achieved</div></div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-header fade-up">
+    <div>
+      <div class="section-number">06 / Education</div>
+      <h2>Academic Background</h2>
+    </div>
+    <div class="section-line"></div>
+  </div>
+  <div class="edu-grid fade-up">
+    <div class="edu-card">
+      <div class="edu-degree">B.Tech · Computer Science</div>
+      <div class="edu-school">VIT Bhopal</div>
+      <div class="edu-field">Computer Science & Engineering</div>
+      <div class="edu-cgpa">9.00</div>
+      <div class="edu-cgpa-label">CGPA</div>
+      <div class="edu-period">Aug 2022 – Aug 2026</div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-degree">BS · Data Science</div>
+      <div class="edu-school">IIT Madras</div>
+      <div class="edu-field">Data Science & Applications (Online)</div>
+      <div class="edu-cgpa">8.25</div>
+      <div class="edu-cgpa-label">CGPA · Foundation Level</div>
+      <div class="edu-period">Sept 2025 – Sept 2029</div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-degree">Class 12th · ISC</div>
+      <div class="edu-school">City Montessori School</div>
+      <div class="edu-field">ISC Board, Lucknow</div>
+      <div class="edu-cgpa">93%</div>
+      <div class="edu-cgpa-label">Percentage</div>
+      <div class="edu-period">July 2022</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-header fade-up" style="justify-content:center;">
+    <div style="text-align:center;">
+      <div class="section-number">07 / Contact</div>
+      <h2>Let's Connect</h2>
+    </div>
+  </div>
+  <p class="contact-subtitle fade-up">Open to Data Analyst, Financial Analyst, and Data Engineering roles. Let's build something impactful together.</p>
+  <div class="contact-links fade-up">
+    <a href="mailto:agarwalshishir91@gmail.com" class="contact-link primary">Email Me</a>
+    <a href="https://www.linkedin.com/in/shishiragarwal" target="_blank" class="contact-link">LinkedIn</a>
+    <a href="https://github.com" target="_blank" class="contact-link">GitHub</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>© 2026 Shishir Agarwal</span>
+  <span>Finance × Data Portfolio</span>
+  <span>Lucknow, India</span>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-up:not(.visible)').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
